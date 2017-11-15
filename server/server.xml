@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="server" default="all">
+  
+  
+  <property file="server.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.ane"/>
+    <include name="*.zip"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="lib/ant-javafx.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javafx-mx.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/packager.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="lib/tools.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.api.grpc/proto-google-common-protos/0.1.9/3760f6a6e13c8ab070aa629876cdd183614ee877/proto-google-common-protos-0.1.9.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.api/api-common/1.0.0-rc1/2e5ff0421f3988e0c628d7512b34723f48d82b65/api-common-1.0.0-rc1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.auto.value:auto-value:1.1.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.auto.value/auto-value/1.1/f6951c141ea3e89c0f8b01da16834880a1ebf162/auto-value-1.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.code.gson:gson:2.7.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.0.19/c3754a0bdd545b00ddc26884f9e7624f8b6a14de/error_prone_annotations-2.0.19.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.guava:guava:19.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0/6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9/guava-19.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.instrumentation/instrumentation-api/0.4.3/41614af3429573dc02645d541638929d877945a2/instrumentation-api-0.4.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.4.0/96aba8ab71c16018c6adf66771ce15c6491bc0fe/protobuf-java-util-3.4.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.4.0/b32aba0cbe737a4ca953f71688725972e3ee927c/protobuf-java-3.4.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-context:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.7.0/e004fa243a627a64e91712154b93c5611d5c3af3/grpc-context-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-core:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.7.0/307405121aac5a31fa9b45dd883a8b3607ba7ab6/grpc-core-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-netty/1.7.0/2ceeca086ba8388293dea4a26f524815f7f905d1/grpc-netty-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf-lite/1.7.0/a0e2a7b7498cdcdb4a37bbe2f781cd2259a6bdb2/grpc-protobuf-lite-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf/1.7.0/2ee434bb315f074f176913c4293dd3b3bb63bccc/grpc-protobuf-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-stub/1.7.0/b80ca6416e1433648de7af49e62b12bf3c4a500/grpc-stub-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.grpc:grpc-testing:1.7.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.grpc/grpc-testing/1.7.0/d3fedaea51587b4b687e0f2dfc60017b9fffeed6/grpc-testing-1.7.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.16.Final/63b5fa95c74785e16f2c30ce268bc222e35c8cb5/netty-buffer-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http2/4.1.16.Final/45c27cddac120a4fcda8f699659e59389f7b9736/netty-codec-http2-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.16.Final/d64312378b438dfdad84267c599a053327c6f02a/netty-codec-http-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-socks/4.1.16.Final/f42aabfb1dcae4eaf1700f2c2d047eab3c1b8523/netty-codec-socks-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-codec/4.1.16.Final/d84a1f21768b7309c2954521cf5a1f46c2309eb1/netty-codec-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-common:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-common/4.1.16.Final/177a6b30cca92f6f5f9873c9befd681377a4c328/netty-common-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-handler-proxy/4.1.16.Final/e3007ed3368748ccdc35c1f38c7d6c089768373a/netty-handler-proxy-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-handler/4.1.16.Final/fec0e63e7dd7f4eeef7ea8dc47a1ff32dfc7ebc2/netty-handler-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-resolver/4.1.16.Final/f6eb553b53fb3a90a8ac1170697093fed82eae28/netty-resolver-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.1.16.Final/3c8ee2c4d4a1cbb947a5c184c7aeb2204260958b/netty-transport-4.1.16.Final.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/io.opencensus/opencensus-api/0.6.0/8e3cd27ac3634373aa4e7aba3c13fc5ac22cb6b7/opencensus-api-0.6.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_joda-time:joda-time:2.8.2.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/joda-time/joda-time/2.8.2/d27c24204c5e507b16fec01006b3d0f1ec42aed4/joda-time-2.8.2.jar"/>
+  </path>
+  
+  <path id="library.gradle:_junit:junit:4.11.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/junit/junit/4.11/4e031bb61df09069aeb2bffb4019e7a5034a4ee0/junit-4.11.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.mockito:mockito-core:1.9.5.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/org.mockito/mockito-core/1.9.5/c3264abeea62c4d2f367e21484fbb40c7e256393/mockito-core-1.9.5.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.objenesis:objenesis:1.0.classpath">
+    <pathelement location="${basedir}/../.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/1.0/9b473564e792c2bdf1449da1f0b1b5bff9805704/objenesis-1.0.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module server -->
+  
+  <dirname property="module.server.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.server" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.server" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.server" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.server" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="server.output.dir" value="${module.server.basedir}/out/production/server"/>
+  <property name="server.testoutput.dir" value="${module.server.basedir}/out/test/server"/>
+  
+  <path id="server.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="server.module.production.classpath">
+    <path refid="${module.jdk.classpath.server}"/>
+  </path>
+  
+  <path id="server.runtime.production.module.classpath">
+    <pathelement location="${server.output.dir}"/>
+  </path>
+  
+  <path id="server.module.classpath">
+    <path refid="${module.jdk.classpath.server}"/>
+    <pathelement location="${server.output.dir}"/>
+  </path>
+  
+  <path id="server.runtime.module.classpath">
+    <pathelement location="${server.testoutput.dir}"/>
+    <pathelement location="${server.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.server">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.server">
+    <patternset refid="excluded.from.module.server"/>
+  </patternset>
+  
+  
+  <target name="compile.module.server" depends="compile.module.server.production,compile.module.server.tests" description="Compile module server"/>
+  
+  <target name="compile.module.server.production" depends="register.custom.compilers" description="Compile module server; production classes"/>
+  
+  <target name="compile.module.server.tests" depends="register.custom.compilers,compile.module.server.production" description="compile module server; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.server" description="cleanup module">
+    <delete dir="${server.output.dir}"/>
+    <delete dir="${server.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module server_main -->
+  
+  <dirname property="module.server_main.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.server_main" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.server_main" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.server_main" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.server_main" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="server_main.output.dir" value="${module.server_main.basedir}/out/production/classes"/>
+  <property name="server_main.testoutput.dir" value="${module.server_main.basedir}/out/production/classes"/>
+  
+  <path id="server_main.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="server_main.module.production.classpath">
+    <path refid="${module.jdk.classpath.server_main}"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  <path id="server_main.runtime.production.module.classpath">
+    <pathelement location="${server_main.output.dir}"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  <path id="server_main.module.classpath">
+    <path refid="${module.jdk.classpath.server_main}"/>
+    <pathelement location="${server_main.output.dir}"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  <path id="server_main.runtime.module.classpath">
+    <pathelement location="${server_main.output.dir}"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.server_main">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.server_main">
+    <patternset refid="excluded.from.module.server_main"/>
+  </patternset>
+  
+  <path id="server_main.module.sourcepath">
+    <dirset dir="${module.server_main.basedir}/build/generated/source/proto/main">
+      <include name="grpc"/>
+      <include name="grpc/com/grpc/helloworld"/>
+    </dirset>
+    <dirset dir="${module.server_main.basedir}/build/generated/source/proto/main">
+      <include name="java"/>
+    </dirset>
+    <dirset dir="${module.server_main.basedir}/src/main">
+      <include name="java"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.server_main" depends="compile.module.server_main.production,compile.module.server_main.tests" description="Compile module server_main"/>
+  
+  <target name="compile.module.server_main.production" depends="register.custom.compilers" description="Compile module server_main; production classes">
+    <mkdir dir="${server_main.output.dir}"/>
+    <javac2 destdir="${server_main.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.server_main}/javac">
+      <compilerarg line="${compiler.args.server_main}"/>
+      <bootclasspath refid="server_main.module.bootclasspath"/>
+      <classpath refid="server_main.module.production.classpath"/>
+      <src refid="server_main.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.server_main"/>
+    </javac2>
+    
+    <copy todir="${server_main.output.dir}">
+      <fileset dir="${module.server_main.basedir}/build/generated/source/proto/main/grpc">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.server_main.basedir}/build/generated/source/proto/main/grpc/com/grpc/helloworld">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.server_main.basedir}/build/generated/source/proto/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.server_main.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.server_main.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.server_main.tests" depends="register.custom.compilers,compile.module.server_main.production" description="compile module server_main; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.server_main" description="cleanup module">
+    <delete dir="${server_main.output.dir}"/>
+    <delete dir="${server_main.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module server_test -->
+  
+  <dirname property="module.server_test.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.server_test" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.server_test" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.server_test" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.server_test" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
+  
+  <property name="server_test.output.dir" value="undefined"/>
+  <property name="server_test.testoutput.dir" value="${module.server_test.basedir}/out/test/classes"/>
+  
+  <path id="server_test.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="server_test.module.production.classpath">
+    <path refid="${module.jdk.classpath.server_test}"/>
+    <pathelement location="${server_main.output.dir}"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-testing:1.7.0.classpath"/>
+    <path refid="library.gradle:_junit:junit:4.11.classpath"/>
+    <path refid="library.gradle:_org.mockito:mockito-core:1.9.5.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.gradle:_org.objenesis:objenesis:1.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  <path id="server_test.runtime.production.module.classpath">
+    <path refid="server_main.runtime.production.module.classpath"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-testing:1.7.0.classpath"/>
+    <path refid="library.gradle:_junit:junit:4.11.classpath"/>
+    <path refid="library.gradle:_org.mockito:mockito-core:1.9.5.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.gradle:_org.objenesis:objenesis:1.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  <path id="server_test.module.classpath">
+    <path refid="${module.jdk.classpath.server_test}"/>
+    <pathelement location="${server_main.output.dir}"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-testing:1.7.0.classpath"/>
+    <path refid="library.gradle:_junit:junit:4.11.classpath"/>
+    <path refid="library.gradle:_org.mockito:mockito-core:1.9.5.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.gradle:_org.objenesis:objenesis:1.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  <path id="server_test.runtime.module.classpath">
+    <pathelement location="${server_test.testoutput.dir}"/>
+    <path refid="server_main.runtime.module.classpath"/>
+    <path refid="library.gradle:_com.google.api.grpc:proto-google-common-protos:0.1.9.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-netty:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-stub:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-testing:1.7.0.classpath"/>
+    <path refid="library.gradle:_junit:junit:4.11.classpath"/>
+    <path refid="library.gradle:_org.mockito:mockito-core:1.9.5.classpath"/>
+    <path refid="library.gradle:_com.google.api:api-common:1.0.0-rc1.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-core:1.7.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http2:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler-proxy:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.guava:guava:19.0.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java-util:3.4.0.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-protobuf-lite:1.7.0.classpath"/>
+    <path refid="library.gradle:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.gradle:_org.objenesis:objenesis:1.0.classpath"/>
+    <path refid="library.gradle:_com.google.auto.value:auto-value:1.1.classpath"/>
+    <path refid="library.gradle:_com.google.code.findbugs:jsr305:3.0.0.classpath"/>
+    <path refid="library.gradle:_joda-time:joda-time:2.8.2.classpath"/>
+    <path refid="library.gradle:_io.grpc:grpc-context:1.7.0.classpath"/>
+    <path refid="library.gradle:_com.google.errorprone:error_prone_annotations:2.0.19.classpath"/>
+    <path refid="library.gradle:_com.google.instrumentation:instrumentation-api:0.4.3.classpath"/>
+    <path refid="library.gradle:_io.opencensus:opencensus-api:0.6.0.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-http:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-handler:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-transport:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec-socks:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.code.gson:gson:2.7.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-codec:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-buffer:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-resolver:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_io.netty:netty-common:4.1.16.final.classpath"/>
+    <path refid="library.gradle:_com.google.protobuf:protobuf-java:3.4.0.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.server_test">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.server_test">
+    <patternset refid="excluded.from.module.server_test"/>
+  </patternset>
+  
+  <path id="server_test.module.test.sourcepath">
+    <dirset dir="${module.server_test.basedir}/src/test">
+      <include name="java"/>
+      <include name="resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.server_test" depends="compile.module.server_test.production,compile.module.server_test.tests" description="Compile module server_test"/>
+  
+  <target name="compile.module.server_test.production" depends="register.custom.compilers,compile.module.server_main" description="Compile module server_test; production classes"/>
+  
+  <target name="compile.module.server_test.tests" depends="register.custom.compilers,compile.module.server_test.production" description="compile module server_test; test classes" unless="skip.tests">
+    <mkdir dir="${server_test.testoutput.dir}"/>
+    <javac2 destdir="${server_test.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.server_test}/javac">
+      <compilerarg line="${compiler.args.server_test}"/>
+      <bootclasspath refid="server_test.module.bootclasspath"/>
+      <classpath refid="server_test.module.classpath"/>
+      <src refid="server_test.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.server_test"/>
+    </javac2>
+    
+    <copy todir="${server_test.testoutput.dir}">
+      <fileset dir="${module.server_test.basedir}/src/test/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.server_test.basedir}/src/test/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.server_test" description="cleanup module">
+    <delete dir="${server_test.output.dir}"/>
+    <delete dir="${server_test.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.server, clean.module.server_main, clean.module.server_test" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.server, compile.module.server_main, compile.module.server_test" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

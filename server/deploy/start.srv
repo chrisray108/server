@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -rf upload
+unzip  upload.zip
+. upload/run.sh
+
